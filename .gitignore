@@ -7,6 +7,8 @@
 
 .vscode
 .idea
+.vs
+out/
 
 # ignore generated files
 *.generated.*

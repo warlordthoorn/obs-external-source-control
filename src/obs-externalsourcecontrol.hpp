@@ -16,12 +16,8 @@ You should have received a copy of the GNU General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/>
 */
 
-#ifndef PLUGINNAME_H
-#define PLUGINNAME_H
+#pragma once
 
-#define PLUGIN_NAME "@CMAKE_PROJECT_NAME@"
-#define PLUGIN_VERSION "@CMAKE_PROJECT_VERSION@"
+#include <obs.hpp>
 
-#define blog(level, msg, ...) blog(level, "[" PLUGIN_NAME "] " msg, ##__VA_ARGS__)
-
-#endif // PLUGINNAME_H
+#include "plugin-macros.generated.h"

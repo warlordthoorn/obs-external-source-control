@@ -16,12 +16,24 @@ You should have received a copy of the GNU General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/>
 */
 
-#ifndef PLUGINNAME_H
-#define PLUGINNAME_H
+#include <obs-module.h>
+#include <obs.hpp>
 
-#define PLUGIN_NAME "@CMAKE_PROJECT_NAME@"
-#define PLUGIN_VERSION "@CMAKE_PROJECT_VERSION@"
+#include "settingsdialog.hpp"
+#include "../obs-externalsourcecontrol.hpp"
 
-#define blog(level, msg, ...) blog(level, "[" PLUGIN_NAME "] " msg, ##__VA_ARGS__)
+SettingsDialog::SettingsDialog(QWidget *parent)
+	: QDialog(parent, Qt::Dialog),
+	  ui(new Ui::SettingsDialog)
+{
+	ui->setupUi(this);
 
-#endif // PLUGINNAME_H
+	// Remove the ? button on dialogs on Windows (cause ugly)
+	setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+
+}
+
+SettingsDialog::~SettingsDialog()
+{
+	delete ui;
+}

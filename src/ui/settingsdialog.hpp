@@ -1,6 +1,6 @@
 /*
-Plugin Name
-Copyright (C) <Year> <Developer> <Email Address>
+obs-externalsourcecontrol
+Copyright (C) 2022-2023 warlordthoorn warlordthoorn@gmail.com
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -16,21 +16,23 @@ You should have received a copy of the GNU General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/>
 */
 
-#include <obs-module.h>
+#pragma once
 
-#include "plugin-macros.generated.h"
+#include <QDialog>
 
-OBS_DECLARE_MODULE()
-OBS_MODULE_USE_DEFAULT_LOCALE(PLUGIN_NAME, "en-US")
+#include "../plugin-macros.generated.h"
 
-bool obs_module_load(void)
-{
-	blog(LOG_INFO, "plugin loaded successfully (version %s) test",
-	     PLUGIN_VERSION);
-	return true;
-}
+#include "ui_settingsdialog.h"
 
-void obs_module_unload()
-{
-	blog(LOG_INFO, "plugin unloaded");
-}
+class SettingsDialog : public QDialog {
+	Q_OBJECT
+
+public:
+	explicit SettingsDialog(QWidget *parent = 0);
+	~SettingsDialog();
+
+//private Q_SLOTS:
+
+private:
+	Ui::SettingsDialog *ui;
+};
