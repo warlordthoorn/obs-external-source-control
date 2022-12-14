@@ -19,6 +19,7 @@ with this program. If not, see <https://www.gnu.org/licenses/>
 #pragma once
 
 #include <QDialog>
+#include <QPushButton>
 
 #include "../plugin-macros.generated.h"
 
@@ -31,7 +32,9 @@ public:
 	explicit SettingsDialog(QWidget *parent = 0);
 	~SettingsDialog();
 
-//private Q_SLOTS:
+private Q_SLOTS:
+	void dialogButtonClicked(QAbstractButton *button);
+
 
 private:
 	Ui::SettingsDialog *ui;

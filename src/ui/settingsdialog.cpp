@@ -29,11 +29,22 @@ SettingsDialog::SettingsDialog(QWidget *parent)
 	ui->setupUi(this);
 
 	// Remove the ? button on dialogs on Windows (cause ugly)
-	setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+	// setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
+	connect(ui->buttonBox, &QDialogButtonBox::clicked, this, &SettingsDialog::dialogButtonClicked);
 }
 
 SettingsDialog::~SettingsDialog()
 {
 	delete ui;
+}
+
+void SettingsDialog::dialogButtonClicked(QAbstractButton *button)
+{
+	if (button == ui->buttonBox->button(QDialogButtonBox::Ok))
+		blog(LOG_INFO, "todo");
+	else if (button == ui->buttonBox->button(QDialogButtonBox::Apply))
+		blog(LOG_INFO, "todo");
+	else if (button == ui->buttonBox->button(QDialogButtonBox::Cancel))
+		setVisible(false);
 }
