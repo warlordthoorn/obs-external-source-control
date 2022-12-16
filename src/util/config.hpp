@@ -30,8 +30,8 @@ struct Config {
 	void save();
 	void reset();
 	std::atomic<bool> pluginEnabled;
+	std::atomic<uint16_t> refreshFrequency;
 	QString externalTopic;
 	QString sourceName;
-	std::atomic<uint16_t> refreshFrequency;
 	config_t *getConfigStore();
 };
