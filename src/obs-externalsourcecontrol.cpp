@@ -22,16 +22,22 @@ with this program. If not, see <https://www.gnu.org/licenses/>
 #include <obs-module.h>
 
 #include "obs-externalsourcecontrol.hpp"
+#include "util/config.hpp"
 #include "ui/settingsdialog.hpp"
 
 OBS_DECLARE_MODULE()
 OBS_MODULE_USE_DEFAULT_LOCALE(PLUGIN_NAME, "en-US")
 
 SettingsDialog *_settingsDialog = nullptr;
+ConfigPtr _config;
 
 bool obs_module_load(void)
 {
 	blog(LOG_INFO, "initializing");
+
+	// intialize config store such that everything in the plugin has the same data
+	_config = ConfigPtr(new Config());
+	_config->load();
 
 	// inspired by
 	// https://github.com/obsproject/obs-websocket/blob/master/src/obs-websocket.cpp
@@ -60,4 +66,10 @@ void obs_module_unload()
 	blog(LOG_INFO, "shutting down");
 
 	blog(LOG_INFO, "plugin unloaded");
+}
+
+// this way the config is shared accros the plugin, again just copied from obs-websocket
+ConfigPtr GetConfig()
+{
+	return _config;
 }

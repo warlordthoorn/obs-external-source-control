@@ -21,14 +21,12 @@ with this program. If not, see <https://www.gnu.org/licenses/>
 
 #include "../obs-externalsourcecontrol.hpp"
 #include "settingsdialog.hpp"
+#include "../util/config.hpp"
 
 SettingsDialog::SettingsDialog(QWidget *parent)
 	: QDialog(parent, Qt::Dialog), ui(new Ui::SettingsDialog)
 {
 	ui->setupUi(this);
-
-	// Remove the ? button on dialogs on Windows (cause ugly)
-	// setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
 	connect(ui->buttonBox, &QDialogButtonBox::clicked, this,
 		&SettingsDialog::dialogButtonClicked);
@@ -42,9 +40,47 @@ SettingsDialog::~SettingsDialog()
 void SettingsDialog::dialogButtonClicked(QAbstractButton *button)
 {
 	if (button == ui->buttonBox->button(QDialogButtonBox::Ok))
-		blog(LOG_INFO, "todo");
+		save();
 	else if (button == ui->buttonBox->button(QDialogButtonBox::Apply))
-		blog(LOG_INFO, "todo");
+		save();
 	else if (button == ui->buttonBox->button(QDialogButtonBox::Cancel))
 		setVisible(false);
+}
+
+void SettingsDialog::save()
+{
+	auto conf = GetConfig();
+	if (!conf) {
+		blog(LOG_ERROR,
+		     "[SettingsDialog::save] Unable to retreive config!");
+		return;
+	}
+
+	conf->pluginEnabled = ui->enableExternalControlCheckBox->isChecked();
+	conf->refreshFrequency = ui->sourceIntervalSpinBox->value();
+	conf->externalTopic = ui->subscriptionTopicLineEdit->text();
+	conf->sourceName = ui->namedSourceLineEdit->text();
+
+	conf->save();
+}
+
+void SettingsDialog::loadUI()
+{
+	auto conf = GetConfig();
+	if (!conf) {
+		blog(LOG_ERROR,
+		     "[SettingsDialog::loadUI] Unable to retreive config!");
+		return;
+	}
+
+	ui->enableExternalControlCheckBox->setChecked(conf->pluginEnabled);
+	ui->sourceIntervalSpinBox->setValue(conf->refreshFrequency);
+	ui->subscriptionTopicLineEdit->setText(conf->externalTopic);
+	ui->namedSourceLineEdit->setText(conf->sourceName);
+}
+
+// called when the widget is shown
+void SettingsDialog::showEvent(QShowEvent *)
+{
+	loadUI();
 }

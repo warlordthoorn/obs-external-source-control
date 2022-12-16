@@ -18,12 +18,20 @@ with this program. If not, see <https://www.gnu.org/licenses/>
 
 #pragma once
 
-#include <memory>
-#include <obs.hpp>
+#include <atomic>
+#include <QString>
+#include <util/config-file.h>
 
 #include "plugin-macros.generated.h"
 
-struct Config;
-typedef std::shared_ptr<Config> ConfigPtr;
-
-ConfigPtr GetConfig();
+struct Config {
+	Config();
+	void load();
+	void save();
+	void reset();
+	std::atomic<bool> pluginEnabled;
+	QString externalTopic;
+	QString sourceName;
+	std::atomic<uint16_t> refreshFrequency;
+	config_t *getConfigStore();
+};

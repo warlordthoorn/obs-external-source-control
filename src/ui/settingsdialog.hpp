@@ -31,9 +31,12 @@ class SettingsDialog : public QDialog {
 public:
 	explicit SettingsDialog(QWidget *parent = 0);
 	~SettingsDialog();
+	void showEvent(QShowEvent *event);
 
 private Q_SLOTS:
 	void dialogButtonClicked(QAbstractButton *button);
+	void save();
+	void loadUI();
 
 private:
 	Ui::SettingsDialog *ui;
