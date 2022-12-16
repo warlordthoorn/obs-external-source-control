@@ -23,15 +23,15 @@ with this program. If not, see <https://www.gnu.org/licenses/>
 #include "../obs-externalsourcecontrol.hpp"
 
 SettingsDialog::SettingsDialog(QWidget *parent)
-	: QDialog(parent, Qt::Dialog),
-	  ui(new Ui::SettingsDialog)
+	: QDialog(parent, Qt::Dialog), ui(new Ui::SettingsDialog)
 {
 	ui->setupUi(this);
 
 	// Remove the ? button on dialogs on Windows (cause ugly)
 	// setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
-	connect(ui->buttonBox, &QDialogButtonBox::clicked, this, &SettingsDialog::dialogButtonClicked);
+	connect(ui->buttonBox, &QDialogButtonBox::clicked, this,
+		&SettingsDialog::dialogButtonClicked);
 }
 
 SettingsDialog::~SettingsDialog()
