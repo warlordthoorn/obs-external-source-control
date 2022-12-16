@@ -19,8 +19,8 @@ with this program. If not, see <https://www.gnu.org/licenses/>
 #include <obs-module.h>
 #include <obs.hpp>
 
-#include "settingsdialog.hpp"
 #include "../obs-externalsourcecontrol.hpp"
+#include "settingsdialog.hpp"
 
 SettingsDialog::SettingsDialog(QWidget *parent)
 	: QDialog(parent, Qt::Dialog), ui(new Ui::SettingsDialog)

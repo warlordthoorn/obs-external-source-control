@@ -18,8 +18,8 @@ with this program. If not, see <https://www.gnu.org/licenses/>
 
 #include <QAction>
 #include <QMainWindow>
-#include <obs-module.h>
 #include <obs-frontend-api.h>
+#include <obs-module.h>
 
 #include "obs-externalsourcecontrol.hpp"
 #include "ui/settingsdialog.hpp"
@@ -33,7 +33,8 @@ bool obs_module_load(void)
 {
 	blog(LOG_INFO, "initializing");
 
-	// inspired by https://github.com/obsproject/obs-websocket/blob/master/src/obs-websocket.cpp
+	// inspired by
+	// https://github.com/obsproject/obs-websocket/blob/master/src/obs-websocket.cpp
 	// Request ui access from QT and initialize our dialog window
 	obs_frontend_push_ui_translation(obs_module_get_string);
 	QMainWindow *mainWindow =
@@ -49,8 +50,7 @@ bool obs_module_load(void)
 	QObject::connect(menuAction, &QAction::triggered,
 			 [] { _settingsDialog->show(); });
 
-	blog(LOG_INFO, "successfully loaded (version %s)",
-	     PLUGIN_VERSION);
+	blog(LOG_INFO, "successfully loaded (version %s)", PLUGIN_VERSION);
 
 	return true;
 }
