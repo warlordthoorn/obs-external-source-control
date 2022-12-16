@@ -18,11 +18,9 @@ set(LINUX_MAINTAINER_EMAIL "warlordthoorn@gmail.com")
 
 # Add your custom source files here - header files are optional and only required for visibility
 # e.g. in Xcode or Visual Studio
-target_sources(${CMAKE_PROJECT_NAME}
-    PRIVATE src/obs-externalsourcecontrol.cpp
-            src/obs-externalsourcecontrol.hpp
-            src/ui/settingsdialog.cpp
-            src/ui/settingsdialog.hpp)
+target_sources(
+  ${CMAKE_PROJECT_NAME} PRIVATE src/obs-externalsourcecontrol.cpp src/obs-externalsourcecontrol.hpp
+                                src/ui/settingsdialog.cpp src/ui/settingsdialog.hpp)
 
 # Import libobs as main plugin dependency
 find_package(libobs REQUIRED)
