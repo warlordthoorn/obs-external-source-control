@@ -20,9 +20,14 @@ set(LINUX_MAINTAINER_EMAIL "warlordthoorn@gmail.com")
 # e.g. in Xcode or Visual Studio
 target_sources(
   ${CMAKE_PROJECT_NAME}
-  PRIVATE src/obs-externalsourcecontrol.cpp src/obs-externalsourcecontrol.hpp
-          src/ui/settingsdialog.cpp src/ui/settingsdialog.hpp src/util/config.hpp
-          src/util/config.cpp)
+  PRIVATE src/obs-externalsourcecontrol.cpp
+          src/obs-externalsourcecontrol.hpp
+          src/ui/settingsdialog.cpp
+          src/ui/settingsdialog.hpp
+          src/util/config.hpp
+          src/util/config.cpp
+          src/util/eventhandler.cpp
+          src/util/eventhandler.hpp)
 
 # Import libobs as main plugin dependency
 find_package(libobs REQUIRED)

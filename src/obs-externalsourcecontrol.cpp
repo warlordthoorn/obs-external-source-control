@@ -23,6 +23,7 @@ with this program. If not, see <https://www.gnu.org/licenses/>
 
 #include "obs-externalsourcecontrol.hpp"
 #include "util/config.hpp"
+#include "util/eventHandler.hpp"
 #include "ui/settingsdialog.hpp"
 
 OBS_DECLARE_MODULE()
@@ -30,17 +31,27 @@ OBS_MODULE_USE_DEFAULT_LOCALE(PLUGIN_NAME, "en-US")
 
 SettingsDialog *_settingsDialog = nullptr;
 ConfigPtr _config;
+EventHandlerPtr _eventHandler;
 
 bool obs_module_load(void)
 {
+	// inspired by
+	// https://github.com/obsproject/obs-websocket/blob/master/src/obs-websocket.cpp
 	blog(LOG_INFO, "initializing");
 
 	// intialize config store such that everything in the plugin has the same data
 	_config = ConfigPtr(new Config());
 	_config->load();
 
-	// inspired by
-	// https://github.com/obsproject/obs-websocket/blob/master/src/obs-websocket.cpp
+	_eventHandler = EventHandlerPtr(new EventHandler());
+
+	// set callback to start server etc
+	// _config->_savecallback = ...
+
+	// set callback to eventhandler for start end stream
+	// _eventHandler->_startStreamingCallback =
+	// _eventHandler->_endStreamingCallback =
+
 	// Request ui access from QT and initialize our dialog window
 	obs_frontend_push_ui_translation(obs_module_get_string);
 	QMainWindow *mainWindow =
@@ -65,11 +76,20 @@ void obs_module_unload()
 {
 	blog(LOG_INFO, "shutting down");
 
+	_eventHandler.reset();
+
+	_config.reset();
+
 	blog(LOG_INFO, "plugin unloaded");
 }
 
 // this way the config is shared accros the plugin, again just copied from obs-websocket
-ConfigPtr GetConfig()
+ConfigPtr getConfig()
 {
 	return _config;
+}
+
+EventHandlerPtr getEventHandler()
+{
+	return _eventHandler;
 }

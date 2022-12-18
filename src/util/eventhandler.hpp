@@ -18,17 +18,30 @@ with this program. If not, see <https://www.gnu.org/licenses/>
 
 #pragma once
 
-#include <memory>
+#include <atomic>
+#include <functional>
 #include <obs.hpp>
+#include <obs-frontend-api.h>
 
+#include "../obs-externalsourcecontrol.hpp"
 #include "plugin-macros.generated.h"
 
-struct Config;
-typedef std::shared_ptr<Config> ConfigPtr;
+class EventHandler {
+public:
+	EventHandler();
+	~EventHandler();
+	typedef std::function<void()> StartStreamingCallback;
+	StartStreamingCallback _startStreamingCallback;
+	typedef std::function<void()> EndStreamingCallback;
+	EndStreamingCallback _endStreamingCallback;
 
-class EventHandler;
-typedef std::shared_ptr<EventHandler> EventHandlerPtr;
+private:
+	// variables
+	std::atomic<bool> _obsLoaded;
 
-ConfigPtr getConfig();
-
-EventHandlerPtr getEventHandler();
+	// frontend
+	static void frontendEventHandler(enum obs_frontend_event event,
+					 void *data);
+	void frontendLoadingFinishHandler();
+	void frontendExitHandler();
+};

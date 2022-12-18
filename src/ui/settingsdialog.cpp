@@ -39,9 +39,10 @@ SettingsDialog::~SettingsDialog()
 
 void SettingsDialog::dialogButtonClicked(QAbstractButton *button)
 {
-	if (button == ui->buttonBox->button(QDialogButtonBox::Ok))
+	if (button == ui->buttonBox->button(QDialogButtonBox::Ok)) {
 		save();
-	else if (button == ui->buttonBox->button(QDialogButtonBox::Apply))
+		setVisible(false);
+	} else if (button == ui->buttonBox->button(QDialogButtonBox::Apply))
 		save();
 	else if (button == ui->buttonBox->button(QDialogButtonBox::Cancel))
 		setVisible(false);
@@ -49,7 +50,7 @@ void SettingsDialog::dialogButtonClicked(QAbstractButton *button)
 
 void SettingsDialog::save()
 {
-	auto conf = GetConfig();
+	auto conf = getConfig();
 	if (!conf) {
 		blog(LOG_ERROR,
 		     "[SettingsDialog::save] Unable to retreive config!");
@@ -66,7 +67,7 @@ void SettingsDialog::save()
 
 void SettingsDialog::loadUI()
 {
-	auto conf = GetConfig();
+	auto conf = getConfig();
 	if (!conf) {
 		blog(LOG_ERROR,
 		     "[SettingsDialog::loadUI] Unable to retreive config!");

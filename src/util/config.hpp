@@ -20,6 +20,7 @@ with this program. If not, see <https://www.gnu.org/licenses/>
 
 #include <atomic>
 #include <QString>
+#include <functional>
 #include <util/config-file.h>
 
 #include "plugin-macros.generated.h"
@@ -29,9 +30,13 @@ struct Config {
 	void load();
 	void save();
 	void reset();
+	config_t *getConfigStore();
+
 	std::atomic<bool> pluginEnabled;
 	std::atomic<uint16_t> refreshFrequency;
 	QString externalTopic;
 	QString sourceName;
-	config_t *getConfigStore();
+
+	typedef std::function<void()> SaveCallback;
+	SaveCallback _savecallback;
 };

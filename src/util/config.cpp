@@ -78,6 +78,9 @@ void Config::save()
 			  externalTopic.toUtf8().constData());
 	config_set_string(obsConfig, CONFIG_NAME_SECTION, CONFIG_PARAM_SOURCE,
 			  sourceName.toUtf8().constData());
+
+	if (_savecallback)
+		_savecallback();
 }
 
 void Config::load()
