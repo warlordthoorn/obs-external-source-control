@@ -1,0 +1,3 @@
+[submodule "deps/MQTT-C"]
+	path = deps/MQTT-C
+	url = https://github.com/LiamBindle/MQTT-C
