@@ -23,7 +23,7 @@ with this program. If not, see <https://www.gnu.org/licenses/>
 
 #include "obs-externalsourcecontrol.hpp"
 #include "util/config.hpp"
-#include "util/eventHandler.hpp"
+#include "util/eventhandler.hpp"
 #include "ui/settingsdialog.hpp"
 
 OBS_DECLARE_MODULE()
