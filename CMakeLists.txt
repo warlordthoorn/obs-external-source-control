@@ -16,6 +16,18 @@ set(MACOS_BUNDLEID "com.example.${CMAKE_PROJECT_NAME}")
 # Replace `me@contoso.com` with the maintainer email address you want to put in Linux packages
 set(LINUX_MAINTAINER_EMAIL "warlordthoorn@gmail.com")
 
+# Submodule deps check
+if(NOT
+   (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/deps/paho.mqtt.c/CMakeLists.txt))
+  obs_status(FATAL_ERROR "obs-externalsourcecontrol submodule deps not available.")
+endif()
+
+# find paho and build
+set(PAHO_BUILD_STATIC TRUE)
+set(PAHO_ENABLE_TESTING FALSE)
+add_subdirectory(deps/paho.mqtt.c)
+
+
 # Add your custom source files here - header files are optional and only required for visibility
 # e.g. in Xcode or Visual Studio
 target_sources(
@@ -39,7 +51,7 @@ target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE OBS::obs-frontend-api)
 
 # Uncomment those lines if you want to use Qt in your plugin
 find_qt(COMPONENTS Widgets Core)
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE Qt::Core Qt::Widgets)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE Qt::Core Qt::Widgets "paho-mqtt3a-static")
 set_target_properties(
   ${CMAKE_PROJECT_NAME}
   PROPERTIES AUTOMOC ON
